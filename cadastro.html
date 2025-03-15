@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="descrição"
+      content="Bem vindo à Clínica Miotto, aqui temos um atendimento rápido, personalizado e de qualidade."
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./styles/cadastro.css" />
+    <meta name="viewport" content="width=device-width, inicial-s">
+    <title>Curious Cars</title>
+  </head>
+
+  <body>
+
+    <header>
+      <h1>Curious Cars</h1>
+    </header>
+        
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cadastro.html">Cadastro</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <form enctype="multipart/form-data" action="cadastra.php" method="post">
+        <div>
+          <label for="nome">Nome:</label>
+          <input type="text" name="clientNome" id="nome">
+        </div>
+        <div>
+          <label for="email">E-mail:</label>
+          <input type="email" name="clientEmail" id="email">
+        </div>
+        <div>
+          <label for="cpf">CPF:</label>
+          <input type="text" name="clientCPF" id="cpf">
+        </div>
+        <div>
+          <label for="numero">Número:</label>
+          <input type="tel" name="clientNum" id="numero">
+        </div>
+        <div>
+          <label for="password">Senha:</label>
+          <input type="password" name="clientSenha" id="password">
+        </div>
+        <button type="submit"><i class="material-icons">login</i>Cadastrar</button>
+    </main>
+  </body>
+</html>

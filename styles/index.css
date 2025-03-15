@@ -1,0 +1,134 @@
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: Verdana;
+    font-size: 85%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(10, 10, 10);
+}
+
+header {
+    text-align: center;
+    font-size: 8px;
+    padding: 5px;
+    background-color: rgb(41, 35, 35);
+    color: rgba(255, 255, 255, 0.985);
+}
+
+footer {
+    text-align: center;
+    padding: 2%;
+}
+
+main {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav {
+    position: sticky; 
+    top: 0;
+    background-color: rgb(184, 11, 11);
+    text-align: center;
+    padding: 1px;
+}
+
+nav ul {
+    padding: 0%;
+}
+
+nav li{
+    padding: 0px 25px;
+    display: inline-block;
+}
+
+nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.card {
+    background-color: #f8d9d9;
+    border-radius: 10px;
+    outline: 1px solid rgb(224, 171, 171);
+    max-height: 300px;
+    min-width: 200px;
+    max-width: 250px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 10px #ff000080;
+    outline: 1px solid rgb(255, 205, 205);
+}   
+
+.card h1 {
+    margin: 1px;
+    padding-left: 10px;
+    font-size: 1.2rem;
+}
+
+.card p {
+    margin: 1px;
+    padding-left: 10px;
+    font-size: small;
+}
+
+.preco {
+    padding-left: 10px;
+    font-size: small;
+    color: rgb(253, 0, 0);
+    align-content: center;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    flex: 1 1 250px;
+    max-height: 50%;
+    border-radius: 10px 10px 0px 0px;
+    outline: 1px solid rgb(224, 171, 171)
+}
+
+.anoCidade {
+    padding: 0px 10px 8px;
+    font-size: small;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.anoCidade button {
+    background: linear-gradient(135deg, #ff3030, #c50000);
+    color: white;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.anoCidade button:hover {
+    background: linear-gradient(135deg, #ff0000, #ff5f3b);
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 600px) {
+    main {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
