@@ -1,6 +1,6 @@
 body {
-    background-color: rgb(255, 255, 255);
-    font-family: Verdana;
+    background-color: #E6E6E6;
+    font-family: Helvetica;
     font-size: 85%;
     margin: 0;
     padding: 0;
@@ -8,17 +8,31 @@ body {
     color: rgb(10, 10, 10);
 }
 
-header {
-    text-align: center;
-    font-size: 8px;
+hr {
+    border: none;
+    height: 2px; 
+    background-color: #120D31;
+    margin: 0;
+  }
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     padding: 5px;
-    background-color: rgb(41, 35, 35);
-    color: rgba(255, 255, 255, 0.985);
+    border-radius: 10px;
+    width: fit-content;
+    margin: 0 auto;
 }
 
-footer {
-    text-align: center;
-    padding: 2%;
+select {
+    padding: 10px;
+    color: #302F4D;
+    border-radius: 30px;
+    border: 2px solid #302F4D;
+    cursor: pointer;
+    background-color: #E6E6E6;
 }
 
 main {
@@ -32,29 +46,40 @@ main {
 nav {
     position: sticky; 
     top: 0;
-    background-color: rgb(184, 11, 11);
-    text-align: center;
+    background-color: #120D31;
     padding: 1px;
 }
 
 nav ul {
-    padding: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    list-style: none;
+    gap: 20px; /* Espaçamento entre os itens */
+    padding: 0;
 }
 
 nav li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0px 25px;
-    display: inline-block;
 }
 
-nav a{
+nav ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 5px; 
     text-decoration: none;
     color: white;
 }
 
 .card {
-    background-color: #f8d9d9;
+    background-color: #cdcdcd;
     border-radius: 10px;
-    outline: 1px solid rgb(224, 171, 171);
+    outline: 1px solid rgb(98, 98, 98);
     max-height: 300px;
     min-width: 200px;
     max-width: 250px;
@@ -64,11 +89,11 @@ nav a{
     flex-direction: column;
     flex: 1;
     gap: 8px;
+    cursor: pointer;
 }
 
 .card:hover {
-    box-shadow: 0px 0px 10px #ff000080;
-    outline: 1px solid rgb(255, 205, 205);
+    box-shadow: 0px 0px 20px #b7aeae80;
 }   
 
 .card h1 {
@@ -83,52 +108,59 @@ nav a{
     font-size: small;
 }
 
-.preco {
-    padding-left: 10px;
-    font-size: small;
-    color: rgb(253, 0, 0);
-    align-content: center;
-}
-
 .card img {
-    width: 100%;
     height: auto;
-    flex: 1 1 250px;
-    max-height: 50%;
+    flex: 1;
+    max-height: 45%;
     border-radius: 10px 10px 0px 0px;
-    outline: 1px solid rgb(224, 171, 171)
+    outline: 1px solid rgb(155, 155, 155)
 }
 
-.anoCidade {
-    padding: 0px 10px 8px;
+.descricao {
+    display: flex; 
+    flex-direction: column;
+}
+
+.descricao p {
+    display: flex;
+    gap: 10px;
+}
+
+.descricao span {
+    font-size: medium;
+}
+
+.preco {
     font-size: small;
+    background-color: #302F4D;
     display: flex;
     flex: 1;
     justify-content: space-between;
+    border-radius: 0px 0px 10px 10px;
+    max-height: 15%;
 }
 
-.anoCidade button {
-    background: linear-gradient(135deg, #ff3030, #c50000);
-    color: white;
-    padding: 8px 12px;
-    font-size: 16px;
+.preco span {
+    font-size: small;
+    color: rgb(255, 255, 255);
     font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    align-content: center;
+    margin: 0 auto;
 }
 
-.anoCidade button:hover {
-    background: linear-gradient(135deg, #ff0000, #ff5f3b);
-    transform: translateY(-2px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+footer {
+    background-color: #120D31;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: x-small;
 }
 
 @media (max-width: 600px) {
-    main {
-        width: 100%;
-        margin: 0 auto;
+    .card {
+        min-height: 350px;
     }
 }
