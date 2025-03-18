@@ -2,19 +2,11 @@ body {
     background-color: #E6E6E6;
     font-family: Helvetica;
     font-size: 85%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     color: rgb(10, 10, 10);
     height: 100%;
-}
-
-header {
-    text-align: center;
-    font-size: 8px;
-    padding: 5px;
-    background-color: rgb(56, 56, 56);
-    color: white;
 }
 
 nav {

@@ -2,10 +2,11 @@ body {
     background-color: #E6E6E6;
     font-family: Helvetica;
     font-size: 85%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     color: rgb(10, 10, 10);
+    overflow-x: hidden;
 }
 
 hr {
@@ -41,6 +42,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding-bottom: 1.5rem;
 }
 
 nav {
@@ -154,10 +156,10 @@ footer {
     color: white;
     text-align: center;
     padding: 5px;
+    font-size: x-small;
     position: fixed;
     bottom: 0;
     width: 100%;
-    font-size: x-small;
 }
 
 a {

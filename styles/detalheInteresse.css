@@ -23,7 +23,6 @@ main {
   justify-content: center;
   margin-top: 1rem;
   flex-direction: column;
-  padding-bottom: 2rem;
 }
 
 nav {
@@ -60,37 +59,44 @@ nav ul li a {
 }
 
 footer {
-  background-color: #120D31;
+  background-color: #120d31;
   color: white;
   text-align: center;
   padding: 5px;
-  font-size: x-small;
   position: fixed;
   bottom: 0;
   width: 100%;
+  font-size: x-small;
 }
 
 .container {
-  display: flex;
-  justify-content: center; 
-  gap: 10px; 
-  max-width: 100%; 
-  padding: 12px;
-  background-color: #302F4D;
-  border-radius: 10px 10px 0px 0px;
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    max-width: 100%; 
+    padding: 12px;
+    background-color: #302F4D;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .container img {
-  max-width: 32%; 
-  height: auto;
-  border-radius: 10px;
+    display: flex;
+    flex: 1;
+    max-width: 33%; 
+    height: auto;
+    border-radius: 10px;
+}
+
+.info {
+    display: flex;
+    margin-bottom: 2rem;
 }
 
 .detalhes {
-  border: 10px solid #302F4D;
-  border-radius: 0px 0px 10px 10px;
-  padding: 1rem 1rem 0rem 1rem;
-  max-width: 100%;
+    border: 10px solid #302F4D;
+    border-radius: 0px 0px 0px 10px;
+    padding: 1rem 1rem 0rem 1rem;
+    width: 60%;
 }
 
 .detalhes h2 {
@@ -109,7 +115,49 @@ footer {
     font-weight: normal;
 }
 
+.interesse {
+    border: 10px solid #302F4D;
+    border-radius: 0px 0px 10px 0px;
+    padding: 1rem 1rem 0rem 1rem;
+    width: 40%;
+}
 
+.interesse label {
+    display: block;
+    margin: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.interesse input,textarea,button {
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 120px; 
+    max-height: 120px;
+    margin-bottom: 10px;
+}
+
+button {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: #120d31;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 @media (max-width: 600px) {
 
@@ -133,7 +181,18 @@ footer {
         border-radius: 10px;
     }
 
+    .info {
+        flex-direction: column;
+    }
+
     .detalhes{
+        border-radius: 0px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .interesse{
+        border-radius: 0px 0px 10px 10px;
         width: 100%;
         box-sizing: border-box;
     }
