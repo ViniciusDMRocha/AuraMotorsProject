@@ -36,7 +36,7 @@ select {
 }
 
 main {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -111,7 +111,7 @@ nav ul li a {
 .card img {
     height: auto;
     flex: 1;
-    max-height: 45%;
+    max-height: 55%;
     border-radius: 10px 10px 0px 0px;
     outline: 1px solid rgb(155, 155, 155)
 }
@@ -135,6 +135,7 @@ nav ul li a {
     background-color: #302F4D;
     display: flex;
     flex: 1;
+    padding: 1em;
     justify-content: space-between;
     border-radius: 0px 0px 10px 10px;
     max-height: 15%;
@@ -159,8 +160,17 @@ footer {
     font-size: x-small;
 }
 
+a {
+    text-decoration: none; 
+    color: inherit;
+}
+
 @media (max-width: 600px) {
     .card {
         min-height: 350px;
+    }
+
+    .preco {
+        padding: 0;
     }
 }
