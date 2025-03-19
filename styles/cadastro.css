@@ -1,4 +1,6 @@
 body {
+    background-image: url("/images/background.svg");
+    background-size: cover;
     background-color: #E6E6E6;
     font-family: Helvetica;
     font-size: 85%;
@@ -6,7 +8,8 @@ body {
     padding: 0;
     box-sizing: border-box;
     color: rgb(10, 10, 10);
-    height: 100%;
+    height: 100vh;
+    width: auto;
 }
 
 nav {
@@ -62,6 +65,7 @@ input, button{
     width: 100%;
     margin: 10px auto;
     padding: 5px;
+    border-radius: 10px;
 } 
 
 button {

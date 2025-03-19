@@ -1,5 +1,7 @@
 body {
-  background-color: #e6e6e6;
+  background-image: url("/images/background.svg");
+  background-size: cover;
+  background-attachment: fixed;
   font-family: Helvetica;
   font-size: 85%;
   margin: 0 auto;
@@ -21,9 +23,11 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 2rem auto;
   flex-direction: column;
-  padding-bottom: 2rem;
+  background-color: #120d31;
+  border-radius: 10px;
+  padding: 0.7rem;
 }
 
 nav {
@@ -76,8 +80,6 @@ footer {
   gap: 10px; 
   max-width: 100%; 
   padding: 12px;
-  background-color: #302F4D;
-  border-radius: 10px 10px 0px 0px;
 }
 
 .container img {
@@ -87,58 +89,45 @@ footer {
 }
 
 .detalhes {
-  border: 10px solid #302F4D;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 10px;
   padding: 1rem 1rem 0rem 1rem;
   max-width: 100%;
+  background-color: #cdcdcd;
 }
 
 .detalhes h2 {
-    font-weight: bold;
-    font-size: 2rem;
-    margin: 0 auto;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 auto;
 }
 
 .detalhes p {
-    font-size: medium;
-    font-weight: bold;
-    color: rgb(35, 35, 35);
+  font-size: medium;
+  font-weight: bold;
+  color: rgb(35, 35, 35);
 }
 
 .detalhes span {
-    font-weight: normal;
+  font-weight: normal;
 }
-
-
 
 @media (max-width: 600px) {
 
-    body {
-        width: 100%;
-    }
+  .container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      box-sizing: border-box;
+  }
 
-    .container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
+  .container img {
+      max-width: 100%; 
+      width: auto; 
+      max-height: 200px;
+      border-radius: 10px;
+  }
 
-    .container img {
-        max-width: 100%; 
-        width: auto; 
-        max-height: 200px;
-        border-radius: 10px;
-    }
-
-    .detalhes{
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    button {
-        margin-bottom: 0.7rem;
-    }
+  .detalhes{
+      box-sizing: border-box;
+  }
 }

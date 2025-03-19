@@ -1,11 +1,14 @@
 body {
-  background-color: #e6e6e6;
-  font-family: Helvetica;
-  font-size: 85%;
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
-  color: rgb(10, 10, 10);
+    background-image: url("/images/background.svg");
+    background-size: cover;
+    background-color: #e6e6e6;
+    background-attachment: fixed;
+    font-family: Helvetica;
+    font-size: 85%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(10, 10, 10);
 }
 
 hr {
@@ -21,8 +24,11 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 2rem auto;
   flex-direction: column;
+  background-color: #120d31;
+  border-radius: 10px;
+  padding: 0.7rem;
 }
 
 nav {
@@ -74,9 +80,8 @@ footer {
     justify-content: center; 
     gap: 10px; 
     max-width: 100%; 
-    padding: 12px;
-    background-color: #302F4D;
-    border-radius: 10px 10px 0px 0px;
+    padding: 0 12px;
+    margin-bottom: 0.75rem;
 }
 
 .container img {
@@ -89,12 +94,12 @@ footer {
 
 .info {
     display: flex;
-    margin-bottom: 2rem;
+    gap: 10px;
 }
 
 .detalhes {
-    border: 10px solid #302F4D;
-    border-radius: 0px 0px 0px 10px;
+    background-color: #cdcdcd;
+    border-radius: 10px;
     padding: 1rem 1rem 0rem 1rem;
     width: 60%;
 }
@@ -116,8 +121,8 @@ footer {
 }
 
 .interesse {
-    border: 10px solid #302F4D;
-    border-radius: 0px 0px 10px 0px;
+    background-color: #cdcdcd;
+    border-radius: 10px;
     padding: 1rem 1rem 0rem 1rem;
     width: 40%;
 }
@@ -134,10 +139,12 @@ footer {
     width: 100%;
     border: 2px solid #ddd;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
     resize: none;
     box-sizing: border-box;
+    outline: 1px solid gray;
+    padding: 0.25rem;
 }
 
 textarea {
@@ -165,12 +172,13 @@ button {
         width: 100%;
     }
 
+
+    
     .container {
         width: 100%;
         display: flex;
         flex-direction: column;
         flex: 1;
-        margin: 0 auto;
         box-sizing: border-box;
     }
 
@@ -178,7 +186,6 @@ button {
         max-width: 100%; 
         width: auto; 
         max-height: 200px;
-        border-radius: 10px;
     }
 
     .info {
@@ -186,13 +193,11 @@ button {
     }
 
     .detalhes{
-        border-radius: 0px;
         width: 100%;
         box-sizing: border-box;
     }
 
     .interesse{
-        border-radius: 0px 0px 10px 10px;
         width: 100%;
         box-sizing: border-box;
     }

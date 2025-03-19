@@ -1,12 +1,13 @@
 body {
-    background-color: #E6E6E6;
+    background-image: url("/images/background.svg");
+    background-size: cover;
+    background-attachment: fixed;
     font-family: Helvetica;
     font-size: 85%;
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     color: rgb(10, 10, 10);
-    overflow-x: hidden;
 }
 
 hr {
@@ -34,6 +35,11 @@ select {
     border: 2px solid #302F4D;
     cursor: pointer;
     background-color: #E6E6E6;
+    appearance: ;
+}
+
+select:hover,select:focus {
+    outline: none;
 }
 
 main {
@@ -80,8 +86,7 @@ nav ul li a {
 
 .card {
     background-color: #cdcdcd;
-    border-radius: 10px;
-    outline: 1px solid rgb(98, 98, 98);
+    border-radius: 15px;
     max-height: 300px;
     min-width: 200px;
     max-width: 250px;
@@ -92,10 +97,12 @@ nav ul li a {
     flex: 1;
     gap: 8px;
     cursor: pointer;
+    transition: transform 0.1s ease-in-out;
 }
 
 .card:hover {
     box-shadow: 0px 0px 20px #b7aeae80;
+    transform: scale(1.04);
 }   
 
 .card h1 {
@@ -115,7 +122,6 @@ nav ul li a {
     flex: 1;
     max-height: 55%;
     border-radius: 10px 10px 0px 0px;
-    outline: 1px solid rgb(155, 155, 155)
 }
 
 .descricao {
