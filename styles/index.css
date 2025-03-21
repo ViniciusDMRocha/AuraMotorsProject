@@ -35,7 +35,6 @@ select {
     border: 2px solid #302F4D;
     cursor: pointer;
     background-color: #E6E6E6;
-    appearance: ;
 }
 
 select:hover,select:focus {
