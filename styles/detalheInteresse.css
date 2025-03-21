@@ -166,14 +166,12 @@ button {
     cursor: pointer;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 670px) {
 
     body {
         width: 100%;
     }
 
-
-    
     .container {
         width: 100%;
         display: flex;

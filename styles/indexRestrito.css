@@ -15,7 +15,7 @@ hr {
     height: 2px; 
     background-color: #120D31;
     margin: 0;
-}
+  }
 
 .search {
     display: flex;
@@ -35,7 +35,6 @@ select {
     border: 2px solid #302F4D;
     cursor: pointer;
     background-color: #E6E6E6;
-    appearance: ;
 }
 
 select:hover,select:focus {
@@ -51,36 +50,54 @@ main {
     padding-bottom: 1.5rem;
 }
 
-nav {
+header {
+    background-color: #120D31;
     position: sticky; 
     top: 0;
-    background-color: #120D31;
-    padding: 1px;
+    height: 64px;
 }
 
-nav ul {
+nav li{
+    flex: 1;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-    list-style: none;
-    gap: 20px; /* Espaçamento entre os itens */
     padding: 0;
 }
 
-nav li{
+.anuncioOptions {
     display: flex;
-    align-items: center;
+    flex: 1;
+    color: white;
+    text-decoration: none;
     justify-content: center;
-    padding: 0px 25px;
+    gap: 3rem;
 }
 
-nav ul li a {
+.logoff {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
     display: flex;
     align-items: center;
     text-decoration: none;
     gap: 5px; 
     color: white;
+}
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    padding-left: 1rem;
+    margin: auto 0;
 }
 
 .card {
@@ -96,7 +113,6 @@ nav ul li a {
     flex: 1;
     gap: 8px;
     cursor: pointer;
-    transition: transform 0.1s ease-in-out;
 }
 
 .card:hover {
@@ -172,12 +188,46 @@ a {
     color: inherit;
 }
 
+
 @media (max-width: 670px) {
     .card {
         min-height: 350px;
     }
 
+    header {
+        display: flex;
+    }
+
     .preco {
         padding: 0;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+
+    .nav-links {
+        position: absolute;
+        width: 40%;
+        background-color: #120D31;
+        flex-direction: column;
+        display: none;
+        padding: 1rem 0rem;
+    }
+    
+    .anuncioOptions {
+        flex-direction: column;
+        margin: 2rem;
+        gap: 2rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+        margin: 0;
+        padding: 1rem;
+    }
+    
+    .hamburger {
+        display: block;
     }
 }

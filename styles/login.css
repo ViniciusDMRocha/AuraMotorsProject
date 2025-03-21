@@ -75,10 +75,14 @@ input, button{
     border-radius: 10px;
 } 
 
-button {
+.botaoEntrar {
     background-color: #302F4D;
     border-radius: 10px;
     color: white;
+    padding: 0.5rem;
+    text-decoration: none;
+    margin: 1rem 0px;
+    cursor: pointer;
 }
 
 input:focus {
@@ -97,7 +101,7 @@ footer {
     width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 670px) {
 
     main {
         width: 100%;

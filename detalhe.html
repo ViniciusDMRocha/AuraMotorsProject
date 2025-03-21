@@ -10,14 +10,26 @@
 
   <body>
       
-    <nav>
-      <ul>
-        <li><a href="index.html"><img src="./images/logo.png" alt="logo"></a></li>
-        <li><a href="index.html"><span class="material-symbols-outlined">
-          account_circle
-          </span>Logoff</a></li>
-      </ul>
-    </nav>
+    <header>
+      <nav>
+        <ul class="nav-links">
+          <li class="home"><a href="indexRestrito.html"><img src="./images/logo.png" alt="logo"></a></li>
+          
+          <div class="anuncioOptions">
+            <a href="cadastroVeiculo.html">Criar Anúncio</a>
+            <a href="listagemAnuncio.html">Meus Anúncios</a>
+          </div>
+          
+          <li><a href="login.html" class="logoff"><span class="material-symbols-outlined">
+            account_circle
+            </span>Logoff</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger" onclick="toggleMenu()">
+        ☰
+      </div>
+    </header>
+
 
     <main>  
       <div class="container">
@@ -44,6 +56,25 @@
         Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG
       </address>
     </footer>
+
+    <script>
+
+      function toggleMenu() {
+
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active');
+
+        document.addEventListener('click', function(event) {
+          const nav = document.querySelector('.nav-links');
+          const hamburger = document.querySelector('.hamburger');
+
+          if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
+            nav.classList.remove('active');
+          }
+        })
+
+      }
+    </script>
 
   </body>
 </html>

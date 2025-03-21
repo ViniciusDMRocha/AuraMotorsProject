@@ -15,7 +15,7 @@ hr {
     height: 2px; 
     background-color: #120D31;
     margin: 0;
-}
+  }
 
 .search {
     display: flex;
@@ -35,47 +35,60 @@ select {
     border: 2px solid #302F4D;
     cursor: pointer;
     background-color: #E6E6E6;
-    appearance: ;
 }
 
 select:hover,select:focus {
     outline: none;
 }
 
+h3 {
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+}
+
 main {
     width: 80%;
     margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    padding-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
-nav {
+header {
+    background-color: #120D31;
     position: sticky; 
     top: 0;
-    background-color: #120D31;
-    padding: 1px;
+    height: 64px;
 }
 
-nav ul {
+nav li{
+    flex: 1;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-    list-style: none;
-    gap: 20px; /* Espaçamento entre os itens */
     padding: 0;
 }
 
-nav li{
+.anuncioOptions {
     display: flex;
-    align-items: center;
+    flex: 1;
+    color: white;
+    text-decoration: none;
     justify-content: center;
-    padding: 0px 25px;
+    gap: 3rem;
 }
 
-nav ul li a {
+.logoff {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -83,78 +96,54 @@ nav ul li a {
     color: white;
 }
 
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    padding-left: 1rem;
+    margin: auto 0;
+}
+
 .card {
     background-color: #cdcdcd;
     border-radius: 15px;
-    max-height: 300px;
     min-width: 200px;
     max-width: 250px;
-    margin: 10px;
+    margin: 1rem;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     flex: 1;
-    gap: 8px;
-    cursor: pointer;
-    transition: transform 0.1s ease-in-out;
+    padding: 10px;
+    border: 1px solid gray;
 }
 
 .card:hover {
     box-shadow: 0px 0px 20px #b7aeae80;
-    transform: scale(1.04);
 }   
 
-.card h1 {
+.card h3 {
     margin: 1px;
     padding-left: 10px;
     font-size: 1.2rem;
+    background-color: #120D31;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.telefone {
+    font-weight: bold;
 }
 
 .card p {
     margin: 1px;
     padding-left: 10px;
     font-size: small;
+    color: #120D31;
 }
 
-.card img {
-    height: auto;
-    flex: 1;
-    max-height: 55%;
-    border-radius: 10px 10px 0px 0px;
-}
-
-.descricao {
-    display: flex; 
-    flex-direction: column;
-}
-
-.descricao p {
-    display: flex;
-    gap: 10px;
-}
-
-.descricao span {
-    font-size: medium;
-}
-
-.preco {
-    font-size: small;
-    background-color: #302F4D;
-    display: flex;
-    flex: 1;
-    padding: 1em;
-    justify-content: space-between;
-    border-radius: 0px 0px 10px 10px;
-    max-height: 15%;
-}
-
-.preco span {
-    font-size: small;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    align-content: center;
-    margin: 0 auto;
-}
 
 footer {
     background-color: #120D31;
@@ -172,12 +161,43 @@ a {
     color: inherit;
 }
 
+
 @media (max-width: 670px) {
-    .card {
-        min-height: 350px;
+
+    header {
+        display: flex;
     }
 
     .preco {
         padding: 0;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+    
+    .anuncioOptions {
+        flex-direction: column;
+        margin: 2rem;
+        gap: 2rem;
+    }
+
+    .nav-links {
+        position: absolute;
+        width: 40%;
+        background-color: #120D31;
+        flex-direction: column;
+        display: none;
+        padding: 1rem 0rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+        margin: 0;
+        padding: 1rem;
+    }
+    
+    .hamburger {
+        display: block;
     }
 }
