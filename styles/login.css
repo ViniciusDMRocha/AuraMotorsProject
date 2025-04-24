@@ -5,11 +5,21 @@ body {
     font-family: Helvetica;
     font-size: 85%;
     margin: 0 auto;
-    padding: 0;
     box-sizing: border-box;
     color: rgb(10, 10, 10);
     height: 100vh;
     width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+header {
+    background-color: #120D31;
+    position: sticky; 
+    top: 0;
+    height: 64px;
 }
 
 nav {
@@ -54,10 +64,6 @@ main {
     max-width: 300px;
     padding: 2rem;
     margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
 }
 
 main a {
@@ -94,10 +100,8 @@ footer {
     background-color: #120D31;
     color: white;
     text-align: center;
-    padding: 5px;
+    padding: 5px 0px;
     font-size: x-small;
-    position: fixed;
-    bottom: 0;
     width: 100%;
 }
 
