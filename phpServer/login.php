@@ -59,7 +59,7 @@ if (checkUserCredentials($pdo, $email, $senha)) {
   session_start();
   $_SESSION['loggedIn'] = true;
   $_SESSION['user'] = $email;
-  $response = new LoginResult(true, './indexRestrito.html');
+  $response = new LoginResult(true, './menuRestrito.html');
 } 
 else
   $response = new LoginResult(false, ''); 

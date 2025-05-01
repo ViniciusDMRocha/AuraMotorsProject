@@ -54,9 +54,7 @@
           const response = await fetch("./phpServer/login.php", { method: 'post', body: new FormData(form) });    // executa uma requisição POST pra login.php com os dados do form
           if (!response.ok) throw new Error(response.statusText); // lança erro caso a resposta do server não seja ok (200).
           const loginResult = await response.json(); // converte para json
-          console.log(window);
           if (loginResult.success)
-
             window.location = loginResult.newLocation; // redirecionada para local indicado na resposta
           else {
             const parLoginFailMsg = document.querySelector("#loginFailMsg");  // mensagem de erro

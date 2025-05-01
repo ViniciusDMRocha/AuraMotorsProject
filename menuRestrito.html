@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Aura Motors</title>
-    <link rel="stylesheet" href="./styles/indexRestrito.css" />
+    <link rel="stylesheet" href="./styles/menuRestrito.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <meta name="viewport" content="width=device-width, inicial-s">
   </head>
@@ -13,16 +13,16 @@
     <header>
       <nav>
         <ul class="nav-links">
-          <li class="home"><a href="indexRestrito.html"><img src="./images/logo.png" alt="logo"></a></li>
+          <li class="home"><a href="menuRestrito.html"><img src="./images/logo.png" alt="logo"></a></li>
           
           <div class="anuncioOptions">
             <a href="cadastroVeiculo.html">Criar Anúncio</a>
             <a href="listagemAnuncio.html">Meus Anúncios</a>
           </div>
           
-          <li><a href="login.html" class="logoff"><span class="material-symbols-outlined">
+          <li class="liLogoff"><button class="logoff" id="logoff"><span class="material-symbols-outlined">
             account_circle
-            </span>Logoff</a></li>
+            </span>Logoff</button></li>
         </ul>
       </nav>
       <div class="hamburger" onclick="toggleMenu()">
@@ -216,8 +216,10 @@
       </address>
     </footer>
 
-    <script>
+    <script src="./scripts/verifica.js">
+    </script>
 
+    <script>
       function toggleMenu() {
 
         const navLinks = document.querySelector('.nav-links');
@@ -233,6 +235,19 @@
         })
 
       }
+
+      window.addEventListener('load', () => {
+        const buttonLogoff = document.querySelector('#logoff');
+        buttonLogoff.onclick = async () => {
+            try {
+                const response = await fetch("./phpServer/controladorRestrito.php?acao=logout");
+                if (!response.ok) throw new Error(response.statusText);
+                window.location = "./index.html";
+            } catch (e) {
+                console.error(e);
+            }
+        };
+      });
     </script>
 
   </body>
