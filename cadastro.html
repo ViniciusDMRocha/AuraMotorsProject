@@ -23,28 +23,28 @@
     </header>
 
     <main>
-      <form enctype="multipart/form-data" action="" method="post">
+      <form enctype="multipart/form-data" action="./phpServer/controlador.php?acao=adicionarAnunciante" method="POST">
         <div>
           <label for="nome">Nome:</label>
-          <input type="text" name="clientNome" id="nome">
+          <input type="text" name="nome" id="nome">
         </div>
         <div>
           <label for="email">E-mail:</label>
-          <input type="email" name="clientEmail" id="email">
+          <input type="email" name="email" id="email">
         </div>
         <div>
           <label for="cpf">CPF:</label>
-          <input type="text" name="clientCPF" id="cpf">
+          <input type="text" name="cpf" id="cpf">
         </div>
         <div>
-          <label for="numero">Número:</label>
-          <input type="tel" name="clientNum" id="numero">
+          <label for="telefone">Telefone:</label>
+          <input type="tel" name="telefone" id="telefone">
         </div>
         <div>
-          <label for="password">Senha:</label>
-          <input type="password" name="clientSenha" id="password">
+          <label for="senha">Senha:</label>
+          <input type="password" name="senha" id="senha">
         </div>
-        <a href="login.html">Cadastrar</a>
+        <button>Cadastrar</button>
     </main>
 
     <footer>

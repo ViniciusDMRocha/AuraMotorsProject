@@ -27,16 +27,16 @@
     </header>
 
     <main>
-      <form enctype="multipart/form-data" action="cadastra.php" method="post">
+      <form name="formLogin">
         <div>
           <label for="email">E-mail:</label>
-          <input type="email" name="clientUsername" id="email">
+          <input type="email" name="email" id="email">
         </div>
         <div>
-          <label for="password">Senha:</label>
-          <input type="password" name="clientPassword" id="password">
+          <label for="senha">Senha:</label>
+          <input type="password" name="senha" id="senha">
         </div>
-        <a href="indexRestrito.html" class="botaoEntrar">Entrar</a>
+        <button class="botaoEntrar">Entrar</button>
         <a href="cadastro.html">Cadastrar-se</a>
     </main>
 
@@ -45,6 +45,41 @@
         Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG
       </address>
     </footer>
+
+    <script>
+
+      async function sendForm(form) {  // função assíncrona que envia form
+  
+        try {
+          const response = await fetch("./phpServer/login.php", { method: 'post', body: new FormData(form) });    // executa uma requisição POST pra login.php com os dados do form
+          if (!response.ok) throw new Error(response.statusText); // lança erro caso a resposta do server não seja ok (200).
+          const loginResult = await response.json(); // converte para json
+          console.log(window);
+          if (loginResult.success)
+
+            window.location = loginResult.newLocation; // redirecionada para local indicado na resposta
+          else {
+            const parLoginFailMsg = document.querySelector("#loginFailMsg");  // mensagem de erro
+            parLoginFailMsg.textContent = 'Dados incorretos. Por favor, tente novamente.';
+            parLoginFailMsg.classList.remove('hide');
+            form.senha.value = "";
+            form.senha.focus();
+          }
+        }
+        catch (e) {  // para caso ocorra qualquer erro na hr de fazer login
+          const parLoginFailMsg = document.querySelector("#loginFailMsg");
+          parLoginFailMsg.textContent = 'Falha inesperada. Entre em contato o administrador do sistema.';
+          parLoginFailMsg.classList.remove('hide');
+        }
+      }
+  
+      const meuForm = document.forms.formLogin;  // pega o form
+      meuForm.onsubmit = function (e) {
+        e.preventDefault();
+        sendForm(meuForm);  // chama a função para enviar o form
+      }
+  
+    </script>
 
   </body>
 </html>
