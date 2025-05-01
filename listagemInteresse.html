@@ -17,12 +17,12 @@
           
           <div class="anuncioOptions">
             <a href="cadastroVeiculo.html">Criar Anúncio</a>
-            <a href="">Meus Anúncios</a>
+            <a href="listagemAnuncio.html">Meus Anúncios</a>
           </div>
           
-          <li><a href="login.html" class="logoff"><span class="material-symbols-outlined">
+          <li class="liLogoff"><button class="logoff" id="logoff"><span class="material-symbols-outlined">
             account_circle
-            </span>Logoff</a></li>
+            </span>Logoff</button></li>
         </ul>
       </nav>
       <div class="hamburger" onclick="toggleMenu()">
@@ -58,22 +58,39 @@
       </address>
     </footer>
 
+    <script src="./scripts/verifica.js">
+    </script>
+
     <script>
-        function toggleMenu() {
+      function toggleMenu() {
 
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
+          const navLinks = document.querySelector('.nav-links');
+          navLinks.classList.toggle('active');
 
-            document.addEventListener('click', function(event) {
-                const nav = document.querySelector('.nav-links');
-                const hamburger = document.querySelector('.hamburger');
+          document.addEventListener('click', function(event) {
+              const nav = document.querySelector('.nav-links');
+              const hamburger = document.querySelector('.hamburger');
 
-                if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
-                    nav.classList.remove('active');
-                }
-            })
+              if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
+                  nav.classList.remove('active');
+              }
+          })
 
-        }
+      }
+
+      window.addEventListener('load', () => {
+        const buttonLogoff = document.querySelector('#logoff');
+        buttonLogoff.onclick = async () => {
+            try {
+                const response = await fetch("./phpServer/controladorRestrito.php?acao=logout");
+                if (!response.ok) throw new Error(response.statusText);
+                window.location = "./index.html";
+            } catch (e) {
+                console.error(e);
+            }
+        };
+      });
+
     </script>
 
   </body>

@@ -13,6 +13,7 @@ switch ($acao) {
     
   case "exitWhenNotLoggedIn":
     //--------------------------------------------------------------------------------------  
+    session_start();
     if (!isset($_SESSION['loggedIn'])) {    // verifica se o loggedIn é true, caso não seja executa o if
       echo json_encode(['sucesso' => false]);
     }

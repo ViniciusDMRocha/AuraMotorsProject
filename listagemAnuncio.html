@@ -119,6 +119,8 @@
       </address>
     </footer>
 
+    <script src="./scripts/verifica.js"></script>
+
     <script>
 
         function toggleMenu() {
@@ -149,6 +151,19 @@
                     }
                 }
             };
+        });
+
+        window.addEventListener('load', () => {
+          const buttonLogoff = document.querySelector('#logoff');
+          buttonLogoff.onclick = async () => {
+              try {
+                  const response = await fetch("./phpServer/controladorRestrito.php?acao=logout");
+                  if (!response.ok) throw new Error(response.statusText);
+                  window.location = "./index.html";
+              } catch (e) {
+                  console.error(e);
+              }
+          };
         });
 
     </script>

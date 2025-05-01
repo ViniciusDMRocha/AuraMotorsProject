@@ -53,9 +53,18 @@ if (checkUserCredentials($pdo, $email, $senha)) {
   // Aumenta a segurança evitando que o cookie de sessão seja roubado por eventual
   // código JavaScript proveniente de ataq. X S S.
   $cookieParams = session_get_cookie_params();
-  $cookieParams['httponly'] = true;
-  session_set_cookie_params($cookieParams);
   
+  // $cookieParams['httponly'] = true;
+  // session_set_cookie_params($cookieParams);
+  
+  session_set_cookie_params(
+    $cookieParams['lifetime'],
+    $cookieParams['path'],
+    $cookieParams['domain'],
+    $cookieParams['secure'],
+    true  // httponly
+  );
+
   session_start();
   $_SESSION['loggedIn'] = true;
   $_SESSION['user'] = $email;

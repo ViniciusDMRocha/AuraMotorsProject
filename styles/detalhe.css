@@ -34,11 +34,18 @@ main {
   display: flex;
   justify-content: flex-end;
   padding-right: 1rem;
-  display: flex;
   align-items: center;
+  max-width: 150px;
   text-decoration: none;
-  gap: 5px; 
+  gap: 5px;
   color: white;
+  border: none;
+  cursor: pointer;
+  background-color: #120D31;
+}
+
+.liLogoff{
+  justify-content: flex-end;
 }
 
 .hamburger {
@@ -58,6 +65,7 @@ header {
 }
 
 nav li{
+  display: flex;
   flex: 1;
 }
 
