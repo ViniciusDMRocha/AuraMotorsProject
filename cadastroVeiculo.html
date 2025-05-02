@@ -33,7 +33,7 @@
 
     <main>
       <h2>Cadastro de Veículos</h2>
-      <form enctype="multipart/form-data" action="" method="post">
+      <form enctype="multipart/form-data" action="./phpServer/processarCadastro.php" method="POST">
         <div>
           <input type="text" name="veiculoMarca" id="marca" placeholder="Marca">
         </div>
@@ -95,7 +95,7 @@
           <textarea name="veiculoDesc" id="descricao" placeholder="Descrição do Veículo"></textarea>
         </div>
 
-        <a href="listagemAnuncio.html">Cadastrar Veículo</a>
+        <button type="submit">Cadastrar Veículo</button>
     </main>
 
     <footer>

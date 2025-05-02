@@ -56,14 +56,14 @@ nav li {
   padding: 0px 25px;
 }
 
-nav ul li a {
+/* nav ul li a {
   display: flex;
   align-items: center;
   text-decoration: none;
   gap: 5px;
   text-decoration: none;
   color: white;
-}
+} */
 
 footer {
   background-color: #120d31;
@@ -168,7 +168,7 @@ textarea {
     margin-bottom: 10px;
 }
 
-button {
+main button {
     box-sizing: border-box;
     width: 100%;
     padding: 12px;
@@ -179,6 +179,21 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.logoff {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    align-items: center;
+    max-width: 150px;
+    text-decoration: none;
+    gap: 5px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: #120D31;
 }
 
 @media (max-width: 675px) {

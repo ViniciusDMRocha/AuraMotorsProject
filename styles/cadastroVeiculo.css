@@ -134,6 +134,18 @@ a {
     color: inherit;
 }
 
+main button {
+    background-color: #302F4D;
+    border-radius: 10px;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+    padding: 0.6rem;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
 
 @media (max-width: 675px) {
 

@@ -25,7 +25,40 @@ class Anunciante
     // retorna o Id do novo cliente criado
     return $pdo->lastInsertId();
   }
+  static function CreateAnuncio($pdo, $marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $anuncianteId)
+  {
+    try {
+      $stmt = $pdo->prepare(
+        <<<SQL
+        INSERT INTO anuncio (marca, modelo, ano, cor, km, valor, estado, cidade, descricao, datahora, id_anunciante)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)
+        SQL
+      );
+      $stmt->execute([$marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $anuncianteId]);
 
+      // Retorna o id do anúncio recém inserido
+      return $pdo->lastInsertId();
+    } catch (Exception $e) {
+      throw new Exception("Erro ao cadastrar o anúncio: " . $e->getMessage());
+    }
+  }
+
+  // Método para associar fotos ao anúncio
+  static function AssociarFotos($pdo, $anuncioId, $fileNames)
+  {
+    try {
+      foreach ($fileNames as $fileName) {
+        $stmt = $pdo->prepare(
+          <<<SQL
+          INSERT INTO foto (anuncio_id, nome_foto) VALUES (?, ?)
+          SQL
+        );
+        $stmt->execute([$anuncioId, $fileName]);
+      }
+    } catch (Exception $e) {
+      throw new Exception("Erro ao associar fotos ao anúncio: " . $e->getMessage());
+    }
+  }
   // // Busca um cliente na tabela a partir do Id e retorna
   // // os dados na forma de um objeto PHP.
   // static function Get($pdo, $id)

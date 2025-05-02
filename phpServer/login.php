@@ -17,26 +17,26 @@ class LoginResult
 function checkUserCredentials($pdo, $email, $senha)
 {
   $sql = <<<SQL
-    SELECT SenhaHash
+    SELECT Id, SenhaHash
     FROM Anunciante
-    WHERE Email = ?
-    SQL;
+    WHERE Email = ? 
+  SQL;
 
   try {
-    // É necessário utilizar prepared statements por incluir
-    // parâmetros informados pelo usuário
+    // Preparando a consulta para obter o Id e SenhaHash do Anunciante
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$email]);
-    $senhaHash = $stmt->fetchColumn();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$senhaHash) 
-      return false; // a consulta não retornou nenhum resultado (email não encontrado)
+    if (!$user) 
+      return false; // email não encontrado
 
-    if (!password_verify($senha, $senhaHash))
-      return false; // email e/ou senha incorreta
-      
-    // email e senha corretos
-    return true;
+    // Verifica se a senha informada é válida
+    if (!password_verify($senha, $user['SenhaHash']))
+      return false; // senha incorreta
+    
+    // Se as credenciais forem corretas, retorna o id do usuário
+    return $user['Id']; // Retorna o ID do usuário
   } 
   catch (Exception $e) {
     exit('Falha inesperada: ' . $e->getMessage());
@@ -47,31 +47,18 @@ $email = $_POST['email'] ?? '';
 $senha = $_POST['senha'] ?? '';
 
 $pdo = mysqlConnect();
-if (checkUserCredentials($pdo, $email, $senha)) {
-  // Define o parâmetro 'httponly' para o cookie de sessão, para que o cookie
-  // possa ser acessado apenas pelo navegador nas requisições http (e não por código JavaScript).
-  // Aumenta a segurança evitando que o cookie de sessão seja roubado por eventual
-  // código JavaScript proveniente de ataq. X S S.
-  $cookieParams = session_get_cookie_params();
-  
-  // $cookieParams['httponly'] = true;
-  // session_set_cookie_params($cookieParams);
-  
-  session_set_cookie_params(
-    $cookieParams['lifetime'],
-    $cookieParams['path'],
-    $cookieParams['domain'],
-    $cookieParams['secure'],
-    true  // httponly
-  );
+$userId = checkUserCredentials($pdo, $email, $senha);
 
+if ($userId) {
   session_start();
   $_SESSION['loggedIn'] = true;
-  $_SESSION['user'] = $email;
+  $_SESSION['user'] = $email; // Guarda o e-mail
+  $_SESSION['userId'] = $userId; // Guarda o ID do usuário
   $response = new LoginResult(true, './menuRestrito.html');
-} 
-else
-  $response = new LoginResult(false, ''); 
+} else {
+  $response = new LoginResult(false, '');
+}
 
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode($response);
+?>
