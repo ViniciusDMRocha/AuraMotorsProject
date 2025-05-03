@@ -2,6 +2,8 @@
 
 require "conexaoMysql.php";
 require "anunciante.php";
+require "anuncio.php";
+require "interesse.php";
 
 // resgata a ação a ser executada
 $acao = $_GET['acao'];
@@ -12,15 +14,13 @@ $pdo = mysqlConnect();
 switch ($acao) {
     
   case "adicionarAnunciante":
-    //--------------------------------------------------------------------------------------    
+
     $nome = $_POST["nome"] ?? "";
     $cpf = $_POST["cpf"] ?? "";
     $email = $_POST["email"] ?? "";
     $senha = $_POST["senha"] ?? "";
     $telefone = $_POST["telefone"] ?? "";
 
-
-    // gera o hash da senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
     try {
@@ -31,28 +31,58 @@ switch ($acao) {
     }
     break;
 
-    
-  case "excluirCliente":
-    //--------------------------------------------------------------------------------------
-    $idCliente = $_GET["idCliente"] ?? "";
+  case "adicionarInteresse":
+
+    $nome = $_POST["nome"] ?? "";
+    $telefone = $_POST["telefone"] ?? "";
+    $mensagem = $_POST["mensagem"] ?? "";
+    $idAnuncio = $_POST["idAnuncio"] ?? "";
+
     try {
-      Cliente::Remove($pdo, $idCliente);
-      header("location: clientes.html");
+      Interesse::Create($pdo, $nome, $telefone, $mensagem, $idAnuncio);
+      header("Location: ../detalheInteresse.html?id=" .  $idAnuncio);
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
     break;
 
-  case "listarClientes":
-    //--------------------------------------------------------------------------------------
+  case "listarAnuncios":
+   
     try {
-      $arrayClientes = Cliente::GetFirst30($pdo);
+      $arrayAnuncios = Anuncio::ListarAnuncios($pdo);
       header('Content-Type: application/json; charset=utf-8');
-      echo json_encode($arrayClientes);
+      echo json_encode($arrayAnuncios);
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
     break;
+
+  case "buscaAnuncioId":
+
+    $id = $_GET['id'] ?? "";
+
+    try {
+      $anuncio = Anuncio::BuscarPorId($pdo, $id);
+      header('Content-Type: application/json');
+      echo json_encode($anuncio);
+      break;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
+
+      
+  // case "excluirCliente":
+  //   //--------------------------------------------------------------------------------------
+  //   $idCliente = $_GET["idCliente"] ?? "";
+  //   try {
+  //     Cliente::Remove($pdo, $idCliente);
+  //     header("location: clientes.html");
+  //   } catch (Exception $e) {
+  //     throw new Exception($e->getMessage());
+  //   }
+  //   break;
+
 
     //-----------------------------------------------------------------
   default:

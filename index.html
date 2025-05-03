@@ -42,163 +42,8 @@
       </select>
     </div>
     <hr>
-    <main>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/fiesta1.jpg" alt="Carros">
-          <h1>New Fiesta</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> Ford
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 2020-2021
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> Patos de Minas
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 47.000,00</span>
-          </div>
-        </div>
-      </a>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/palio1.jpg" alt="Palio">
-          <h1>Palio Fire</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> Fiat
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 2018-2019
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> Patos de Minas
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 30.000,00</span>
-          </div>
-        </div>
-      </a>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/hb201.jpg" alt="Carros">
-          <h1>HB20 Confort</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> Hyundai
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 2024-2025
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> Uberlândia
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 80.000,00</span>
-          </div>
-        </div>
-      </a>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/vectra1.jpg" alt="Carros">
-          <h1>Vectra GLS</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> Chevrolet
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 2002-2003
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> Araguari
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 31.000,00</span>
-          </div>
-        </div>
-      </a>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/nissan1.jpg" alt="Carros">
-          <h1>Nissan Sentra</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> Nissan
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 2024
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> Ituiutaba
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 152.000,00</span>
-          </div>
-        </div>
-      </a>
-      <a href="detalheInteresse.html">
-        <div class="card">
-          <img src="./images/bmw1.jpg" alt="Carros">
-          <h1>BMW E36</h1>
-          <div class="descricao">
-            <p>
-              <span class="material-symbols-outlined">
-                car_tag
-              </span> BMW
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-                calendar_month
-              </span> 1995
-            </p>
-            <p>
-              <span class="material-symbols-outlined">
-              location_on
-              </span> São Paulo
-            </p>
-          </div>
-          <div class="preco">
-            <span>R$ 290.000,00</span>
-          </div>
-        </div>
-      </a>
+
+    <main id="carrosContainer">
     </main>
 
     <footer>
@@ -206,6 +51,45 @@
         Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG
       </address>
     </footer>
+
+    <script>
+      async function carregarCarros() {
+        try {
+          const resposta = await fetch('./phpServer/controlador.php?acao=listarAnuncios');
+          const carros = await resposta.json();
+    
+          const container = document.getElementById('carrosContainer');
+          carros.forEach(carro => {
+            const card = document.createElement('a');
+            card.href = `detalheInteresse.html?id=${carro.id}`;
+    
+            card.innerHTML = `
+              <div class="card">
+                <img src="./images/${carro.imagem}" alt="${carro.modelo}">
+                <h1>${carro.modelo}</h1>
+                <div class="descricao">
+                  <p><span class="material-symbols-outlined">car_tag</span> ${carro.marca}</p>
+                  <p><span class="material-symbols-outlined">calendar_month</span> ${carro.ano}</p>
+                  <p><span class="material-symbols-outlined">location_on</span> ${carro.localizacao}</p>
+                </div>
+                <div class="preco">
+                  <span>R$ ${parseFloat(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                </div>
+              </div>
+              `;
+
+    
+            container.appendChild(card);
+          });
+    
+        } catch (erro) {
+          console.error("Erro ao carregar os carros:", erro);
+        }
+      }
+    
+      // Executa ao carregar a página
+      carregarCarros();
+    </script>
 
   </body>
 </html>

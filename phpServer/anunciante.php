@@ -11,11 +11,12 @@ class Anunciante
       VALUES (?, ?, ?, ?, ?)
       SQL
     );
-
+    
     $stmt->execute([$nome, $cpf, $email, $senhaHash, $telefone]);
-
+    
     return $pdo->lastInsertId();
   }
+}
 
   // // Busca um cliente na tabela a partir do Id e retorna
   // // os dados na forma de um objeto PHP.
@@ -71,4 +72,3 @@ class Anunciante
   //   $stmt = $pdo->prepare($sql);
   //   $stmt->execute([$id]);
   // }
-}

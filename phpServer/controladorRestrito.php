@@ -3,7 +3,7 @@
 require "conexaoMysql.php";
 require "anunciante.php";
 require "anuncio.php";
-
+require "interesse.php";
 
 // resgata a ação a ser executada
 $acao = $_GET['acao'];
@@ -40,26 +40,41 @@ switch ($acao) {
     }
     break;
 
-    case "adicionarAnuncio":
-      //--------------------------------------------------------------------------------------    
-      $marca = $_POST['veiculoMarca'] ?? '';
-      $modelo = $_POST['veiculoModelo'] ?? '';
-      $ano = $_POST['veiculoAno'] ?? '';
-      $cor = $_POST['veiculoCor'] ?? '';
-      $km = $_POST['veiculoKm'] ?? '';
-      $valor = $_POST['veiculoValor'] ?? '';
-      $estado = $_POST['estado'] ?? '';
-      $cidade = $_POST['veiculoCidade'] ?? '';
-      $descricao = $_POST['veiculoDesc'] ?? '';
-      $foto = $_FILES['veiculoFoto'] ?? '';
-  
-      try {
-        Anuncio::Create($pdo, $marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $foto);
-        header("location: ../listagemAnuncio.html");
-      } catch (Exception $e) {
-        throw new Exception($e->getMessage());
-      }
-      break;
+  case "adicionarAnuncio":
+    //--------------------------------------------------------------------------------------    
+    $marca = $_POST['veiculoMarca'] ?? '';
+    $modelo = $_POST['veiculoModelo'] ?? '';
+    $ano = $_POST['veiculoAno'] ?? '';
+    $cor = $_POST['veiculoCor'] ?? '';
+    $km = $_POST['veiculoKm'] ?? '';
+    $valor = $_POST['veiculoValor'] ?? '';
+    $estado = $_POST['estado'] ?? '';
+    $cidade = $_POST['veiculoCidade'] ?? '';
+    $descricao = $_POST['veiculoDesc'] ?? '';
+    $foto = $_FILES['veiculoFoto'] ?? '';
+
+    try {
+      Anuncio::Create($pdo, $marca, $modelo, $ano, $cor, $km, $descricao, $valor, $estado, $cidade, $foto);
+      header("location: ../listagemAnuncio.html");
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
+
+  case "adicionarInteresse":
+
+    $nome = $_POST["nome"] ?? "";
+    $telefone = $_POST["telefone"] ?? "";
+    $mensagem = $_POST["mensagem"] ?? "";
+    $idAnuncio = $_POST["idAnuncio"] ?? "";
+
+    try {
+      Interesse::Create($pdo, $nome, $telefone, $mensagem, $idAnuncio);
+      header("Location: ../detalheInteresseRestrito.html?id=" .  $idAnuncio);
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
 
 
   case "listarClientes":

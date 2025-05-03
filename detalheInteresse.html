@@ -20,44 +20,41 @@
     </nav>
 
     <main>
-      <div class="container">
-          <img src="images/fiesta1.jpg" alt="palio">
-          <img src="images/fiesta2.jpg" alt="palio">
-          <img src="images/fiesta3.jpg" alt="palio">
-        </div>
+      <div class="container" id="imagensContainer"></div>
 
       <div class="info">
-        <div class="detalhes">
-          <h2>New Fiesta</h2>
+        <div class="detalhes" id="detalhesContainer">
+          <h2 id="modeloCarro"></h2>
           <hr>
-          <p>Marca: <span>Ford</span></p>
-          <p>Ano: <span>2020-2021 </span></p>
-          <p>Cor: <span>Branco</span></p>
-          <p>Quilometragem: <span>15.149km </span></p>
-          <p>Descrição: <span>Surgiu uma oportunidade de trocar de carro e busco vender esse Fiesta novinho, sem nenhum defeito e quase 0 KM.</span></p>
-          <p>Valor: <span>R$ 47.000,00</span></p>
-          <p>Localização: <span>Patos de Minas - MG</span></p>
+          <p>Marca: <span id="marcaCarro"></span></p>
+          <p>Ano: <span id="anoCarro"></span></p>
+          <p>Cor: <span id="corCarro"></span></p> 
+          <p>Quilometragem: <span id="kmCarro"></span></p> 
+          <p>Descrição: <span id="descricaoCarro"></span></p> 
+          <p>Valor: <span id="valorCarro"></span></p>
+          <p>Localização: <span id="cidadeCarro"></span> - <span id="estadoCarro"></span></p>
         </div>
-          
-          <div class="interesse">
-              <form action="">
-                  <div>
-                      <label for="nome">Nome:</label>
-                      <input type="text" name="nome" id="nome">
-                  </div>
-                  <div>
-                      <label for="telefone">Telefone:</label>
-                      <input type="tel" name="telefone" id="telefone">
-                  </div>
-                  <div>
-                      <label for="mensagem">Mensagem:</label>
-                      <textarea name="mensagem" id="mensagem" placeholder="Deixe aqui sua mensagem!"></textarea>
-                  </div>
-                  <button>Enviar interesse</button>
-              </form>
 
-          </div>
+        <div class="interesse">
+          <form action="./phpServer/controlador.php?acao=adicionarInteresse" method="post">
+            <input type="hidden" name="idAnuncio" id="idAnuncioHidden">
+            <div>
+              <label for="nome">Nome:</label>
+              <input type="text" name="nome" id="nome">
+            </div>
+            <div>
+              <label for="telefone">Telefone:</label>
+              <input type="tel" name="telefone" id="telefone">
+            </div>
+            <div>
+              <label for="mensagem">Mensagem:</label>
+              <textarea name="mensagem" id="mensagem" placeholder="Deixe aqui sua mensagem!"></textarea>
+            </div>
+            <button>Enviar interesse</button>
+          </form>
+        </div>
       </div>
+
     </main>
 
     <footer>
@@ -65,6 +62,48 @@
         Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG
       </address>
     </footer>
+
+    <script>
+      async function carregarAnuncio() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) {
+          alert("ID do anúncio não encontrado na URL.");
+          return;
+        }
+    
+        try {
+          const resposta = await fetch(`./phpServer/controlador.php?acao=buscaAnuncioId&id=${id}`);
+          const anuncio = await resposta.json();
+    
+          document.getElementById('modeloCarro').textContent = anuncio.modelo;
+          document.getElementById('marcaCarro').textContent = anuncio.marca;
+          document.getElementById('anoCarro').textContent = anuncio.ano;
+          document.getElementById('corCarro').textContent = anuncio.cor;
+          document.getElementById('kmCarro').textContent = anuncio.km;
+          document.getElementById('descricaoCarro').textContent = anuncio.descricao;
+          document.getElementById('valorCarro').textContent = 
+            `R$ ${parseFloat(anuncio.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+          document.getElementById('cidadeCarro').textContent = anuncio.cidade;
+          document.getElementById('estadoCarro').textContent = anuncio.estado;
+    
+          document.getElementById('idAnuncioHidden').value = anuncio.id;
+    
+          const containerImagens = document.getElementById('imagensContainer');
+          anuncio.imagens.forEach(img => {
+            const imgTag = document.createElement('img');
+            imgTag.src = `./images/${img}`;
+            imgTag.alt = anuncio.modelo;
+            containerImagens.appendChild(imgTag);
+          });
+    
+        } catch (erro) {
+          console.error("Erro ao carregar o anúncio:", erro);
+        }
+      }
+    
+      carregarAnuncio();
+    </script>
 
   </body>
 </html>

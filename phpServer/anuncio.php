@@ -3,7 +3,7 @@
 class Anuncio
 {
 
-    static function Create($pdo, $marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $foto)
+    static function Create($pdo, $marca, $modelo, $ano, $cor, $km, $descricao, $valor, $estado, $cidade, $foto)
     {
         
         try {
@@ -12,11 +12,11 @@ class Anuncio
         
             $stmt1 = $pdo->prepare(
                 <<<SQL
-                INSERT INTO Anuncio (Marca, Modelo, Ano, Cor, Quilometragem, Descricao, Valor, Estado, Cidade, DataHora, IdAnunciante)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)
+                INSERT INTO Anuncio (Marca, Modelo, Ano, Cor, Quilometragem, Descricao, Valor, DataHora, Estado, Cidade, IdAnunciante)
+                VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)
                 SQL
             );
-            $stmt1->execute([$marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $_SESSION['userId']]);
+            $stmt1->execute([$marca, $modelo, $ano, $cor, $km, $descricao, $valor, $estado, $cidade, $_SESSION['userId']]);
 
             $idAnuncio = $pdo->lastInsertId();
             $stmt2 = $pdo->prepare(
@@ -55,4 +55,58 @@ class Anuncio
             echo "Erro ao cadastrar o anúncio: " . $e->getMessage();
         }
     }
+
+    static function ListarAnuncios($pdo) {
+        $sql = <<<SQL
+            SELECT 
+                a.Id AS id,
+                a.Marca AS marca,
+                a.Modelo AS modelo,
+                a.Ano AS ano,
+                a.Valor AS preco,
+                a.Cidade AS localizacao,
+                (SELECT f.NomeArqFoto 
+                 FROM Foto f 
+                 WHERE f.IdAnuncio = a.Id 
+                 LIMIT 1) AS imagem
+            FROM Anuncio a
+        SQL;
+    
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    static function BuscarPorId($pdo, $id) {
+        $sqlAnuncio = <<<SQL
+            SELECT 
+                a.Id AS id,
+                a.Marca AS marca,
+                a.Modelo AS modelo,
+                a.Ano AS ano,
+                a.Cor AS cor,
+                a.Quilometragem AS km,
+                a.Descricao AS descricao,
+                a.Valor AS preco,
+                a.Cidade AS cidade,
+                a.Estado AS estado
+            FROM Anuncio a
+            WHERE a.Id = ?
+        SQL;
+    
+        $stmt = $pdo->prepare($sqlAnuncio);
+        $stmt->execute([$id]);
+        $anuncio = $stmt->fetch(PDO::FETCH_OBJ);
+    
+        $sqlImagens = "SELECT NomeArqFoto AS imagem FROM Foto WHERE IdAnuncio = ?";
+        $stmt = $pdo->prepare($sqlImagens);
+        $stmt->execute([$id]);
+        $imagens = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+        $anuncio->imagens = $imagens;
+    
+        return $anuncio;
+    }
+    
+    
+
 }
