@@ -2,6 +2,8 @@
 
 require "conexaoMysql.php";
 require "anunciante.php";
+require "anuncio.php";
+
 
 // resgata a ação a ser executada
 $acao = $_GET['acao'];
@@ -12,9 +14,9 @@ $pdo = mysqlConnect();
 switch ($acao) {
     
   case "exitWhenNotLoggedIn":
-    //--------------------------------------------------------------------------------------  
+   
     session_start();
-    if (!isset($_SESSION['loggedIn'])) {    // verifica se o loggedIn é true, caso não seja executa o if
+    if (!isset($_SESSION['loggedIn'])) {
       echo json_encode(['sucesso' => false]);
     }
     else{
@@ -25,22 +27,40 @@ switch ($acao) {
 
     
   case "logout":
-    //--------------------------------------------------------------------------------------
+    
     try{
       session_start();
-      // apaga as variáveis de sessão de $_SESSION
       session_unset();
-      // destrói a sessão e as variáveis fisicamente (em arquivo)
       session_destroy();
-      // exclui o cookie da sessão no computador do usuário
       setcookie(session_name(), "", 1, "/");
-      // redireciona o usuário para a página de login
       exit();
     }
     catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
     break;
+
+    case "adicionarAnuncio":
+      //--------------------------------------------------------------------------------------    
+      $marca = $_POST['veiculoMarca'] ?? '';
+      $modelo = $_POST['veiculoModelo'] ?? '';
+      $ano = $_POST['veiculoAno'] ?? '';
+      $cor = $_POST['veiculoCor'] ?? '';
+      $km = $_POST['veiculoKm'] ?? '';
+      $valor = $_POST['veiculoValor'] ?? '';
+      $estado = $_POST['estado'] ?? '';
+      $cidade = $_POST['veiculoCidade'] ?? '';
+      $descricao = $_POST['veiculoDesc'] ?? '';
+      $foto = $_FILES['veiculoFoto'] ?? '';
+  
+      try {
+        Anuncio::Create($pdo, $marca, $modelo, $ano, $cor, $km, $valor, $estado, $cidade, $descricao, $foto);
+        header("location: ../listagemAnuncio.html");
+      } catch (Exception $e) {
+        throw new Exception($e->getMessage());
+      }
+      break;
+
 
   case "listarClientes":
     //--------------------------------------------------------------------------------------

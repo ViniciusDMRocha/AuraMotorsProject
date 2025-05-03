@@ -33,7 +33,7 @@
 
     <main>
       <h2>Cadastro de Veículos</h2>
-      <form enctype="multipart/form-data" action="./phpServer/processarCadastro.php" method="POST">
+      <form enctype="multipart/form-data" action="./phpServer/controladorRestrito.php?acao=adicionarAnuncio" method="POST">
         <div>
           <input type="text" name="veiculoMarca" id="marca" placeholder="Marca">
         </div>
@@ -89,7 +89,7 @@
         </div>
         <div>
           <label for="foto">Imagens:</label>
-          <input type="file" accept="image/*" multiple name="veiculoFoto" id="foto">
+          <input type="file" accept="image/*" multiple name="veiculoFoto[]" id="foto">
         </div>
         <div>
           <textarea name="veiculoDesc" id="descricao" placeholder="Descrição do Veículo"></textarea>
