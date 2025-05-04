@@ -54,63 +54,8 @@
     </div>
     <hr>
 
-    <main>
-        <div class="card">
-            <img src="./images/hb201.jpg" alt="Carros">
-            <h1>HB20 Confort</h1>
-            <div class="descricao">
-                <p>
-                    <span class="material-symbols-outlined">
-                    car_tag
-                    </span> Hyundai
-                </p>
-                <p>
-                    <span class="material-symbols-outlined">
-                    calendar_month
-                    </span> 2024
-                </p>
-                <p>
-                    <span class="material-symbols-outlined">
-                    location_on
-                    </span> Uberlândia
-                </p>
-            </div>
-            <div class="options">
-                <a href="detalhe.html">Detalhes</a>
-                <a href="listagemInteresse.html">Interesses</a>
-                <button class="lixeira">
-                    Excluir
-                </button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="./images/vectra1.jpg" alt="Carros">
-            <h1>Vectra GLS</h1>
-            <div class="descricao">
-                <p>
-                    <span class="material-symbols-outlined">
-                    car_tag
-                    </span> Chevrolet
-                </p>
-                <p>
-                    <span class="material-symbols-outlined">
-                    calendar_month
-                    </span> 2002-2003
-                </p>
-                <p>
-                    <span class="material-symbols-outlined">
-                    location_on
-                    </span> Araguari
-                </p>
-            </div>
-            <div class="options">
-                <a href="detalhe.html">Detalhes</a>
-                <a href="listagemInteresse.html">Interesses</a>
-                <button class="lixeira">
-                    Excluir
-                </button>
-            </div>
-        </div>
+    <main id="meusCarros">
+       
     </main>
 
     <footer>
@@ -122,6 +67,58 @@
     <script src="./scripts/verifica.js"></script>
 
     <script>
+
+        async function carregarMeusCarros() {
+          try {
+            const resposta = await fetch('./phpServer/controladorRestrito.php?acao=ListarMeusAnuncios');
+            const carros = await resposta.json();
+
+            const container = document.getElementById('meusCarros');
+            container.innerHTML = ''; // Limpa o container antes de adicionar novos elementos
+
+            carros.forEach(carro => {
+              const card = document.createElement('div');
+              card.className = 'card';
+
+              card.innerHTML = `
+                <img src="./images/${carro.imagem}" alt="${carro.modelo}">
+                <h1>${carro.modelo}</h1>
+                <div class="descricao">
+                  <p><span class="material-symbols-outlined">car_tag</span> ${carro.marca}</p>
+                  <p><span class="material-symbols-outlined">calendar_month</span> ${carro.ano}</p>
+                  <p><span class="material-symbols-outlined">location_on</span> ${carro.localizacao}</p>
+                </div>
+                <div class="options">
+                  <a href="detalhe.html?id=${carro.id}">Detalhes</a>
+                  <a href="listagemInteresse.html?id=${carro.id}">Interesses</a>
+                  <button class="lixeira" data-id="${carro.id}">Excluir</button>
+                </div>
+              `;
+
+              container.appendChild(card);
+            });
+
+            // Adiciona o event listener para os botões de exclusão
+            document.querySelectorAll('.lixeira').forEach(botao => {
+              botao.addEventListener('click', async () => {
+                const id = botao.getAttribute('data-id');
+                if (confirm('Tem certeza que deseja excluir este anúncio?')) {
+                  try {
+                    const resposta = await fetch(`./phpServer/controladorRestrito.php?acao=excluirAnuncio&id=${id}`);
+                    const resultado = await resposta.text();
+                    alert(resultado);
+                    carregarMeusCarros(); // Recarrega os carros após exclusão
+                  } catch (erro) {
+                    console.error("Erro ao excluir o anúncio:", erro);
+                  }
+                }
+              });
+            });
+
+          } catch (erro) {
+            console.error("Erro ao carregar os carros:", erro);
+          }
+        }
 
         function toggleMenu() {
 
@@ -139,20 +136,6 @@
 
         }
 
-        const deleteButtons = document.querySelectorAll(".lixeira");
-
-        deleteButtons.forEach(button => {
-            button.onclick = function () {
-                const confirmDelete = confirm("Deseja mesmo excluir o anúncio?");
-                if (confirmDelete) {
-                    const card = button.closest('.card');
-                    if (card) {
-                        card.style.display = 'none';
-                    }
-                }
-            };
-        });
-
         window.addEventListener('load', () => {
           const buttonLogoff = document.querySelector('#logoff');
           buttonLogoff.onclick = async () => {
@@ -165,6 +148,8 @@
               }
           };
         });
+
+        carregarMeusCarros();
 
     </script>
 

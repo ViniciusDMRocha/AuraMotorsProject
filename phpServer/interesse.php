@@ -16,4 +16,19 @@ class Interesse
 
     return $pdo->lastInsertId();
   }
+
+  static function ListarMeusInteresses($pdo, $id) {
+    $sql = <<<SQL
+        SELECT 
+            Nome AS nome,
+            Telefone AS telefone,
+            Mensagem AS mensagem
+        FROM Interesse
+        WHERE IdAnuncio = ?
+    SQL;
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
 }

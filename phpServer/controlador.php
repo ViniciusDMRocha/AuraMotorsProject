@@ -71,20 +71,7 @@ switch ($acao) {
     }
     break;
 
-      
-  // case "excluirCliente":
-  //   //--------------------------------------------------------------------------------------
-  //   $idCliente = $_GET["idCliente"] ?? "";
-  //   try {
-  //     Cliente::Remove($pdo, $idCliente);
-  //     header("location: clientes.html");
-  //   } catch (Exception $e) {
-  //     throw new Exception($e->getMessage());
-  //   }
-  //   break;
-
-
-    //-----------------------------------------------------------------
+  
   default:
     exit("Ação não disponível");
 }

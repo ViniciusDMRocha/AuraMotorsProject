@@ -107,6 +107,34 @@ class Anuncio
         return $anuncio;
     }
     
+    static function ListarMeusAnuncios($pdo, $userId) {
+        $sql = <<<SQL
+            SELECT 
+                a.Id AS id,
+                a.Marca AS marca,
+                a.Modelo AS modelo,
+                a.Ano AS ano,
+                a.Cidade AS localizacao,
+                (SELECT f.NomeArqFoto 
+                 FROM Foto f 
+                 WHERE f.IdAnuncio = a.Id 
+                 LIMIT 1) AS imagem
+            FROM Anuncio a
+            WHERE a.IdAnunciante = ?
+        SQL;
     
-
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    static function excluirAnuncio($pdo, $id){
+        $sql = <<<SQL
+        DELETE 
+        FROM Anuncio
+        WHERE id = ?
+        LIMIT 1
+        SQL;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+    }
 }

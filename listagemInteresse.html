@@ -33,23 +33,9 @@
     <h3>Interesses:</h3>
 
 
-    <main>
-        <div class="card">
-            <h3>Alex Campos </h3>
-            <p class="telefone">34 99999-9999</p>
-            <p>Mensagem: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea vitae hic, fuga quidem quisquam corrupti voluptate voluptatem, suscipit, quam exercitationem totam at alias dolore!</p>
-        </div>
-        <div class="card">
-            <h3>João Pedro
-            </h3>
-            <p class="telefone">34 99999-9999</p>
-            <p>Não tenho interesse</p>
-        </div>
-        <div class="card">
-            <h3>Vinicius</h3>
-            <p class="telefone">34 99999-9999</p>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea vitae hic, fuga quidem quisquam corrupti voluptate voluptatem, suscipit, quam exercitationem totam at alias dolore!</p>
-        </div>
+    <main id="interesses">
+
+    </div>
     </main>
 
     <footer>
@@ -90,6 +76,48 @@
             }
         };
       });
+
+      async function carregarInteresses() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) {
+          alert("ID do anúncio não encontrado na URL.");
+          return;
+        }
+
+        try {
+          const resposta = await fetch(`./phpServer/controladorRestrito.php?acao=ListarMeusInteresses&id=${id}`);
+          const interesses = await resposta.json();
+
+          const container = document.getElementById('interesses');
+          container.innerHTML = '';
+
+          if (!interesses || interesses.length === 0) {
+            // Caso não haja interesses
+            container.innerHTML = '<p>Nenhum Interesse encontrado</p>';
+            return;
+          }
+
+          interesses.forEach(interesse => {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            card.innerHTML = `
+              <h3>${interesse.nome}</h3>
+              <p class="telefone">${interesse.telefone}</p>
+              <p>${interesse.mensagem}</p>
+            `;
+
+            container.appendChild(card);
+          });
+
+        } catch (erro) {
+          console.error("Erro ao carregar o anúncio:", erro);
+        }
+      }
+
+    
+      carregarInteresses();
 
     </script>
 

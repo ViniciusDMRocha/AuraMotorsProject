@@ -77,18 +77,45 @@ switch ($acao) {
     break;
 
 
-  case "listarClientes":
-    //--------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------
+  
+  
+  case "ListarMeusAnuncios":
     try {
-      $arrayClientes = Cliente::GetFirst30($pdo);
+      session_start();
+      $arrayAnuncios = Anuncio::ListarMeusAnuncios($pdo, $_SESSION['userId']);
       header('Content-Type: application/json; charset=utf-8');
-      echo json_encode($arrayClientes);
+      echo json_encode($arrayAnuncios);
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
     break;
 
+  case "ListarMeusInteresses":
+    $id = $_GET["id"] ?? "";
+
+    try {
+      $arrayInteresses = Interesse::ListarMeusInteresses($pdo, $id);
+      header('Content-Type: application/json; charset=utf-8');
+      echo json_encode($arrayInteresses);
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
+
+  case "excluirAnuncio":
+
+    $idAnuncio = $_GET["id"] ?? "";
+    try {
+      Anuncio::excluirAnuncio($pdo, $idAnuncio);
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
+
+
     //-----------------------------------------------------------------
+    
   default:
     exit("Ação não disponível");
 }
