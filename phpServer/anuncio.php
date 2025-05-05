@@ -127,14 +127,39 @@ class Anuncio
         $stmt->execute([$userId]);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
     static function excluirAnuncio($pdo, $id){
-        $sql = <<<SQL
-        DELETE 
-        FROM Anuncio
-        WHERE id = ?
-        LIMIT 1
-        SQL;
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
+        try {
+            $pdo->beginTransaction();
+
+            $sql = "DELETE 
+            FROM Anuncio
+            WHERE Id = ?
+            LIMIT 1";
+            
+            $stmt1 = $pdo->prepare($sql);
+            $stmt1->execute([$id]);
+    
+            $sql = "DELETE 
+            FROM Foto
+            WHERE IdAnuncio = ?";
+
+            $stmt2 = $pdo->prepare($sql);
+            $stmt2->execute([$id]);
+    
+            $sql = "DELETE 
+            FROM Interesse
+            WHERE IdAnuncio = ?";
+            
+            $stmt3 = $pdo->prepare($sql);
+            $stmt3->execute([$id]);
+
+            $pdo->commit();
+
+        } catch (Exception $e) {
+            // Se ocorrer um erro, faz o rollback e exibe a mensagem de erro
+            $pdo->rollBack();
+            echo "Erro ao excluir o anúncio: " . $e->getMessage();
+        }
     }
 }

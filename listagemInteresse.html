@@ -106,17 +106,32 @@
               <h3>${interesse.nome}</h3>
               <p class="telefone">${interesse.telefone}</p>
               <p>${interesse.mensagem}</p>
+              <button class="lixeira" data-id="${interesse.id}">Excluir</button>
             `;
 
             container.appendChild(card);
           });
+
+          document.querySelectorAll('.lixeira').forEach(botao => {
+              botao.addEventListener('click', async () => {
+                const id = botao.getAttribute('data-id');
+                if (confirm('Tem certeza que deseja excluir este interesse?')) {
+                  try {
+                    const resposta = await fetch(`./phpServer/controladorRestrito.php?acao=excluirInteresse&id=${id}`);
+                    const resultado = await resposta.text();
+                    carregarInteresses(); // Recarrega os carros após exclusão
+                  } catch (erro) {
+                    console.error("Erro ao excluir o interesse:", erro);
+                  }
+                }
+              });
+            });
 
         } catch (erro) {
           console.error("Erro ao carregar o anúncio:", erro);
         }
       }
 
-    
       carregarInteresses();
 
     </script>

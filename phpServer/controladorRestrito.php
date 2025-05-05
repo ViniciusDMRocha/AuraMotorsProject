@@ -76,10 +76,6 @@ switch ($acao) {
     }
     break;
 
-
-    //-----------------------------------------------------------------
-  
-  
   case "ListarMeusAnuncios":
     try {
       session_start();
@@ -113,8 +109,16 @@ switch ($acao) {
     }
     break;
 
+  case "excluirInteresse":
 
-    //-----------------------------------------------------------------
+    $idInteresse = $_GET["id"] ?? "";
+    try {
+      Interesse::excluirInteresse($pdo, $idInteresse);
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+    break;
+  
     
   default:
     exit("Ação não disponível");

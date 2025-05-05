@@ -22,7 +22,8 @@ class Interesse
         SELECT 
             Nome AS nome,
             Telefone AS telefone,
-            Mensagem AS mensagem
+            Mensagem AS mensagem,
+            Id AS id
         FROM Interesse
         WHERE IdAnuncio = ?
     SQL;
@@ -31,4 +32,16 @@ class Interesse
     $stmt->execute([$id]);
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
+
+  static function excluirInteresse($pdo, $id){
+    $sql = <<<SQL
+    DELETE 
+    FROM Interesse
+    WHERE id = ?
+    LIMIT 1
+    SQL;
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id]);
+  } 
+
 }
