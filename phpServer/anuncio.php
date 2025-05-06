@@ -56,8 +56,8 @@ class Anuncio
         }
     }
 
-    static function ListarAnuncios($pdo) {
-        $sql = <<<SQL
+    static function ListarAnuncios($pdo, $marca, $modelo, $local) {
+        $sql = "
             SELECT 
                 a.Id AS id,
                 a.Marca AS marca,
@@ -69,12 +69,89 @@ class Anuncio
                  FROM Foto f 
                  WHERE f.IdAnuncio = a.Id 
                  LIMIT 1) AS imagem
-            FROM Anuncio a
+            FROM Anuncio a WHERE 1=1
+        ";
+    
+        $parametros = [];
+
+        if($marca){
+            $sql .= " AND a.marca = ?";
+            $parametros[]= $marca;
+        };
+
+        if($modelo){
+            $sql .= " AND a.modelo = ?";
+            $parametros[]= $modelo;
+        };
+        if($local){
+            $sql .= " AND a.Cidade = ?";
+            $parametros[]= $local;
+        };
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($parametros);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    static function ListarMarcas($pdo) {
+        $sql = <<<SQL
+            SELECT DISTINCT Marca FROM Anuncio;
         SQL;
     
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    static function ListarModelos($pdo, $marca) {
+        $sql = <<<SQL
+            SELECT DISTINCT Modelo FROM Anuncio WHERE marca=?;
+        SQL;
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$marca]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    static function ListarLocal($pdo, $marca, $modelo) {
+        $sql = <<<SQL
+            SELECT DISTINCT Cidade FROM Anuncio WHERE marca=? AND modelo=?;
+        SQL;
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$marca, $modelo]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    static function ListarMeusMarcas($pdo, $userId) {
+        $sql = <<<SQL
+            SELECT DISTINCT Marca FROM Anuncio WHERE IdAnunciante = ?;
+        SQL;
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    static function ListarMeusModelos($pdo, $marca, $userId) {
+        $sql = <<<SQL
+            SELECT DISTINCT Modelo FROM Anuncio WHERE marca=? AND IdAnunciante = ?;
+        SQL;
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$marca, $userId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    static function ListarMeusLocal($pdo, $marca, $modelo, $userId) {
+        $sql = <<<SQL
+            SELECT DISTINCT Cidade FROM Anuncio WHERE marca=? AND modelo=? AND IdAnunciante = ?;
+        SQL;
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$marca, $modelo, $userId]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
     
     static function BuscarPorId($pdo, $id) {
         $sqlAnuncio = <<<SQL
@@ -107,7 +184,7 @@ class Anuncio
         return $anuncio;
     }
     
-    static function ListarMeusAnuncios($pdo, $userId) {
+    static function ListarMeusAnuncios($pdo, $userId, $marca, $modelo, $local) {
         $sql = <<<SQL
             SELECT 
                 a.Id AS id,
@@ -123,9 +200,27 @@ class Anuncio
             WHERE a.IdAnunciante = ?
         SQL;
     
+        $parametros = [];
+        $parametros[]= $userId;
+
+        if($marca){
+            $sql .= " AND a.marca = ?";
+            $parametros[]= $marca;
+        };
+
+        if($modelo){
+            $sql .= " AND a.modelo = ?";
+            $parametros[]= $modelo;
+        };
+        if($local){
+            $sql .= " AND a.Cidade = ?";
+            $parametros[]= $local;
+        };
+
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$userId]);
+        $stmt->execute($parametros);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+
     }
 
     static function excluirAnuncio($pdo, $id){

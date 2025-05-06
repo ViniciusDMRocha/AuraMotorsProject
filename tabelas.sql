@@ -1,0 +1,44 @@
+CREATE TABLE Anunciante (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    CPF VARCHAR(14) UNIQUE NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    SenhaHash VARCHAR(255) NOT NULL,
+    Telefone VARCHAR(20) NOT NULL
+);
+
+
+CREATE TABLE Anuncio (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Marca VARCHAR(50) NOT NULL,
+    Modelo VARCHAR(50) NOT NULL,
+    Ano INT NOT NULL,
+    Cor VARCHAR(30) NOT NULL,
+    Quilometragem INT NOT NULL,
+    Descricao TEXT,
+    Valor DECIMAL(10, 2) NOT NULL,
+    DataHora DATETIME NOT NULL,
+    Estado VARCHAR(2) NOT NULL,
+    Cidade VARCHAR(100) NOT NULL,
+    IdAnunciante INT NOT NULL,
+    FOREIGN KEY (IdAnunciante) REFERENCES Anunciante(Id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Interesse (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Telefone VARCHAR(20) NOT NULL,
+    Mensagem TEXT,
+    DataHora DATETIME NOT NULL,
+    IdAnuncio INT NOT NULL,
+    FOREIGN KEY (IdAnuncio) REFERENCES Anuncio(Id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Foto (
+    IdAnuncio INT NOT NULL,
+    NomeArqFoto VARCHAR(255) NOT NULL,
+    PRIMARY KEY (IdAnuncio, NomeArqFoto),
+    FOREIGN KEY (IdAnuncio) REFERENCES Anuncio(Id) ON DELETE CASCADE
+);

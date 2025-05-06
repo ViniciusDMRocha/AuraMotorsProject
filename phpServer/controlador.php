@@ -47,9 +47,13 @@ switch ($acao) {
     break;
 
   case "listarAnuncios":
+
+    $marca = $_POST["marca"] ?? "";
+    $modelo = $_POST["modelo"] ?? "";
+    $local = $_POST["localizacao"] ?? "";
    
     try {
-      $arrayAnuncios = Anuncio::ListarAnuncios($pdo);
+      $arrayAnuncios = Anuncio::ListarAnuncios($pdo, $marca, $modelo, $local);
       header('Content-Type: application/json; charset=utf-8');
       echo json_encode($arrayAnuncios);
     } catch (Exception $e) {
@@ -71,7 +75,42 @@ switch ($acao) {
     }
     break;
 
-  
+    case "listarMarcas":
+   
+      try {
+        $arrayMarcas = Anuncio::ListarMarcas($pdo);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($arrayMarcas);
+      } catch (Exception $e) {
+        throw new Exception($e->getMessage());
+      }
+      break;
+
+      case "listarModelos":
+        $marca = $_GET["marca"];
+
+        try {
+          $arrayModelos = Anuncio::ListarModelos($pdo, $marca);
+          header('Content-Type: application/json; charset=utf-8');
+          echo json_encode($arrayModelos);
+        } catch (Exception $e) {
+          throw new Exception($e->getMessage());
+        }
+        break;
+
+      case "listarLocal":
+        $marca = $_GET["marca"];
+        $modelo = $_GET["modelo"];
+
+        try {
+          $arrayLocal = Anuncio::ListarLocal($pdo, $marca, $modelo);
+          header('Content-Type: application/json; charset=utf-8');
+          echo json_encode($arrayLocal);
+        } catch (Exception $e) {
+          throw new Exception($e->getMessage());
+        }
+        break;
+
   default:
     exit("Ação não disponível");
 }

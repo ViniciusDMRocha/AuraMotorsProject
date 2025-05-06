@@ -31,24 +31,17 @@
     </header>
 
     <div class="search">
-      <select name="marca" id="filterMarca">
-        <option value="" disabled selected>Marca</option>
-        <option value="nissan">Nissan</option>
-        <option value="honda">Honda</option>
-        <option value="fiat">Fiat</option>
-      </select>
-      <select name="modelo" id="filterModelo">
-        <option value="" disabled selected>Modelo</option>
-        <option value="silvia">Silvia</option>
-        <option value="palio">Palio</option>
-        <option value="civic">Civic</option>
-      </select>
-      <select name="localizacao" id="filterLocal">
-        <option value="" disabled selected>Localização</option>
-        <option value="patos">Patos de Minas</option>
-        <option value="uberlandia">Uberlândia</option>
-        <option value="ituiutaba">Ituiutaba</option>
-      </select>
+      <form>
+        <select name="marca" id="filterMarca">
+          <option value="" selected>Marca</option>
+        </select>
+        <select name="modelo" id="filterModelo">
+          <option value="" selected>Modelo</option>
+        </select>
+        <select name="localizacao" id="filterLocal">
+          <option value="" selected>Localização</option>
+        </select>
+      </form>
     </div>
     <hr>
 
@@ -64,9 +57,9 @@
     <script src="./scripts/verifica.js">  
     </script>
 
+  
     <script>
       function toggleMenu() {
-
         const navLinks = document.querySelector('.nav-links');
         navLinks.classList.toggle('active');
 
@@ -78,14 +71,80 @@
             nav.classList.remove('active');
           }
         })
+        }
+
+      window.addEventListener('load', () => {
+      const buttonLogoff = document.querySelector('#logoff');
+      buttonLogoff.onclick = async () => {
+          try {
+              const response = await fetch("./phpServer/controladorRestrito.php?acao=logout");
+              if (!response.ok) throw new Error(response.statusText);
+              window.location = "./index.html";
+          } catch (e) {
+              console.error(e);
+          }
+      };
+      });
+      async function carregaMarca(){
+        try{
+          const resposta = await fetch('./phpServer/controlador.php?acao=listarMarcas'); 
+          const marcas = await resposta.json();
+          const select = document.getElementById('filterMarca');
+          select.innerHTML = '<option value="" selected>Marca</option>';
+          select.value="";
+          marcas.forEach(marca => {
+            const optionMarca = document.createElement('option');
+            optionMarca.value = marca.Marca;
+            optionMarca.textContent = marca.Marca;
+            select.appendChild(optionMarca);
+          });
+        }catch (erro) {
+          console.error("Erro ao carregar os carros:", erro);
+        }
+      }
+      async function carregaModelos(marca){
+        try{
+          const resposta = await fetch(`./phpServer/controlador.php?acao=listarModelos&marca=${marca}`); 
+          const modelos = await resposta.json();
+          const select = document.getElementById('filterModelo');
+          modelos.forEach(modelo => {
+            const optionModelo = document.createElement('option');
+            optionModelo.value = modelo.Modelo;
+            optionModelo.textContent = modelo.Modelo;
+            select.appendChild(optionModelo);
+          });
+        }catch (erro) {
+          console.error("Erro ao carregar os carros:", erro);
+        }
       }
 
-      async function carregarCarros() {
+      async function carregaLocal(marca, modelo){
+        try{
+          const resposta = await fetch(`./phpServer/controlador.php?acao=listarLocal&marca=${marca}&modelo=${modelo}`); 
+          const locais = await resposta.json();
+          const select = document.getElementById('filterLocal');
+          locais.forEach(local => {
+            const optionLocal = document.createElement('option');
+            optionLocal.value = local.Cidade;
+            optionLocal.textContent = local.Cidade;
+            select.appendChild(optionLocal);
+          });
+        }catch (erro) {
+          console.error("Erro ao carregar os carros:", erro);
+        }
+      }
+
+      async function carregarCarros(formData) {
         try {
-          const resposta = await fetch('./phpServer/controlador.php?acao=listarAnuncios');
+          const options = {
+            method: "POST",
+            body: formData
+          }
+          const resposta = await fetch('./phpServer/controlador.php?acao=listarAnuncios', options);
           const carros = await resposta.json();
     
           const container = document.getElementById('carrosContainer');
+          container.innerHTML = '';
           carros.forEach(carro => {
             const card = document.createElement('a');
             card.href = `detalheInteresseRestrito.html?id=${carro.id}`;
@@ -103,7 +162,8 @@
                   <span>R$ ${parseFloat(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
-            `;
+              `;
+
     
             container.appendChild(card);
           });
@@ -112,23 +172,38 @@
           console.error("Erro ao carregar os carros:", erro);
         }
       }
-
-      window.addEventListener('load', () => {
-        const buttonLogoff = document.querySelector('#logoff');
-        buttonLogoff.onclick = async () => {
-            try {
-                const response = await fetch("./phpServer/controladorRestrito.php?acao=logout");
-                if (!response.ok) throw new Error(response.statusText);
-                window.location = "./index.html";
-            } catch (e) {
-                console.error(e);
-            }
-        };
-      });
-
+    
       // Executa ao carregar a página
-      carregarCarros();
-
+      window.addEventListener('load', () => {
+        const form = document.querySelector("form");
+        let formData = new FormData(form);
+        carregaMarca();
+        carregarCarros(formData);
+        const selectMarca = document.getElementById('filterMarca');
+        selectMarca.onchange = () =>{
+          const select = document.getElementById('filterModelo');
+          select.innerHTML = '<option value="" selected>Modelo</option>';
+          const select2 = document.getElementById('filterLocal');
+          select2.innerHTML = '<option value="" selected>Localização</option>';
+          carregaModelos(selectMarca.value);
+          formData = new FormData(form);
+          console.log(form.modelo.value);
+          carregarCarros(formData);
+        }
+        const selectModelo = document.getElementById('filterModelo');
+        selectModelo.onchange = () =>{
+          const select = document.getElementById('filterLocal');
+          select.innerHTML = '<option value="" selected>Localização</option>';
+          carregaLocal(selectMarca.value,selectModelo.value);
+          formData = new FormData(form);
+          carregarCarros(formData);
+        }
+        const selectLocal = document.getElementById('filterLocal');
+        selectLocal.onchange = () =>{
+          formData = new FormData(form);
+          carregarCarros(formData);
+        }
+      })
     </script>
 
   </body>
