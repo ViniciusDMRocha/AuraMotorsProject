@@ -103,7 +103,6 @@
                   try {
                     const resposta = await fetch(`./phpServer/controladorRestrito.php?acao=excluirAnuncio&id=${id}`);
                     const resultado = await resposta.text();
-                    alert(resultado);
                     carregarCarros(); // Recarrega os carros após exclusão
                   } catch (erro) {
                     console.error("Erro ao excluir o anúncio:", erro);

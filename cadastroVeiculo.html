@@ -33,7 +33,7 @@
 
     <main>
       <h2>Cadastro de Veículos</h2>
-      <form enctype="multipart/form-data" action="./phpServer/controladorRestrito.php?acao=adicionarAnuncio" method="POST">
+      <form id="formAnuncio" enctype="multipart/form-data" action="./phpServer/controladorRestrito.php?acao=adicionarAnuncio" method="POST">
         <div>
           <input type="text" name="veiculoMarca" id="marca" placeholder="Marca">
         </div>
@@ -96,6 +96,7 @@
         </div>
 
         <button type="submit">Cadastrar Veículo</button>
+      </form>
     </main>
 
     <footer>
@@ -135,6 +136,15 @@
                 console.error(e);
             }
         };
+      });
+
+
+      document.getElementById('formAnuncio').addEventListener('submit', function (e) {
+        const input = document.getElementById('foto');
+        if (input.files.length < 3) {
+          alert('Por favor, selecione no mínimo 3 imagens.');
+          e.preventDefault(); 
+        }
       });
 
     </script>
